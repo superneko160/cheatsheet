@@ -8,21 +8,21 @@
 - [4. 基本の型](#4-基本の型)
 - [5. 特殊な型](#5-特殊な型)
 - [6. 型エイリアス](#6-型エイリアス)
-- [7. 配列の型注釈](#7-配列の型注釈)
-- [8. タプル型](#8-タプル型)
-- [9. オブジェクトの型注釈](#9-オブジェクトの型注釈)
-- [10. オプションプロパティ](#10-オプションプロパティ)
-- [11. インデックス型](#11-インデックス型)
-- [12. オプショナルチェーン](#12-オプショナルチェーン)
-- [13. Mapオブジェクト](#13-mapオブジェクト)
-- [14. Setオブジェクト](#14-setオブジェクト)
-- [15. 列挙型（Enum）](#15-列挙型enum)
-- [16. インターセクション型](#16-インターセクション型)
-- [17. 分割代入](#17-分割代入)
-- [18. オプション引数](#18-オプション引数)
-- [19. 型ガード関数](#19-型ガード関数)
-- [20. ジェネリクス](#20-ジェネリクス)
-- [21. as const](#21-as-const)
+- [7. 型アサーション](#7-型アサーション)
+- [8. 配列の型注釈](#8-配列の型注釈)
+- [9. タプル型](#9-タプル型)
+- [10. オブジェクトの型注釈](#10-オブジェクトの型注釈)
+- [11. オプションプロパティ](#11-オプションプロパティ)
+- [12. インデックス型](#12-インデックス型)
+- [13. オプショナルチェーン](#13-オプショナルチェーン)
+- [14. Mapオブジェクト](#14-mapオブジェクト)
+- [15. Setオブジェクト](#15-setオブジェクト)
+- [16. 列挙型（Enum）](#16-列挙型enum)
+- [17. インターセクション型](#17-インターセクション型)
+- [18. 分割代入](#18-分割代入)
+- [19. オプション引数](#19-オプション引数)
+- [20. 型ガード関数](#20-型ガード関数)
+- [21. ジェネリクス](#21-ジェネリクス)
 - [22. Widening（型の拡大）](#22-widening型の拡大)
 - [23. 参考](#23-参考)
 
@@ -76,7 +76,97 @@ const str: StringOrNumber = 'hello'
 const num: StringOrNumber = 24
 ```
 
-## 7. 配列の型注釈
+## 7. 型アサーション
+
+特定の変数や式の型を明示的に指定する方法。コンパイラに対して「この変数は特定の型であると信頼してください」というメッセージを送るようなイメージ
+
+```ts
+変数 = 値 as 型
+```
+
+TypeScriptが具体的な型を知ることができないケースがある。たとえば、`document.getElementById`を利用する場合、TypeScriptは`HTMLElement`（か`null`）が返ってくるということしかわからない
+
+`HTMLElement`でも、それが`input`なのか`canvas`なのかでできる操作は異なる。ただ、TS上では`document.getElementById()`で取得できるものの型が判別できないので、`input`の場合は～、`canvas`の場合は～、と自動で判定できない
+
+次のコードはJSではエラーにならないが、TSではコンパイル時にエラーになる。なぜなら`getElementById()`が返すのは`HTMLElement`型であり、`HTMLCanvasElement`型ではないから
+
+```ts
+const canvas = document.getElementById('canvas')
+console.log(canvas.width)  // error
+```
+
+以下のように型アサーションを利用し、コンパイルできる
+
+```ts
+const canvas = document.getElementById('canvas') as HTMLCanvasElement
+```
+
+### as const
+
+`as const`は変数、配列、オブジェクトに使うことができる特別な型アサーション
+
+通常、オブジェクトや配列を定義すると、そのプロパティや要素は変更可能（mutable）と見なされる  
+しかし、`as const`を使うことで、それらが変更不可能（immutable）なものとして扱われ、さらに型がより厳密に推論されるようになる
+
+#### as constの注意点
+
+`as const`はリテラル値やリテラルからなるオブジェクト、配列に対して適用可能。しかし、**演算結果や関数の戻り値など、リテラル以外の式には使えない**
+
+```ts
+let num = 25 as const;  // OK（25のリテラル型になる）
+let result = (12 + 3) as const  // error
+let age = getNum() as const  // error
+
+function getNum(): number {
+  return 15
+}
+```
+
+#### 具体例1. enumの代わりにas constを利用
+
+`enum`は特定の選択肢のセットを簡単に扱うことができる。以下は方向を表す`enum`
+
+```ts
+enum Direction {
+  Up, Down, Left, Right
+}
+```
+
+上の`enum`は`Direction.Up`のように使うことができるほか、`Direction[0]`としてインデックスで逆引きすることも可能
+
+しかし、この逆引きには落とし穴がある。**存在しないインデックスを指定すると`undefined`が返ることである**
+
+```ts
+console.log(Direction[0])  // "Up"
+console.log(Direction[4])  // undefined
+```
+
+以下は`as const`を使った代替案
+
+```ts
+const Directions = {
+  Up: 0,
+  Down: 1,
+  Left: 2,
+  Right: 3
+} as const
+```
+
+このように書くと、`Directions.Up`のようにして値を参照することはできるが、`Directions[0]`のようにインデックスでアクセスすることはできなくなる。このようにして`undefined`を返すリスクを回避できる
+
+#### 具体例2. as constを使ってUnion型を作成
+
+Union型は、変数が取り得る型が複数ある場合に使う型である。ある変数が文字列の「Hello」または「Goodbye」のみを取り得るとき、その変数の型は`'Hello' | 'Goodbye'`と表現できる。しかし、これらの値が多くなると、手動でUnion型を定義するのは大変である
+
+そこでas constを使う。オブジェクトのプロパティや配列の要素にas constを適用することで、TypeScriptによる型推論を利用して、自動的に正確なUnion型を得ることができる
+
+```ts
+const responseStates = ["loading", "success", "error"] as const
+// type ResponseState = "loading" | "success" | "error"
+type ResponseState = (typeof responseStates)[number]
+```
+
+## 8. 配列の型注釈
 
 ```ts
 const numbers: number[] = [1, 2, 3]
@@ -91,7 +181,7 @@ const numbers: readonly number[] = [1, 2, 3]
 numbers[0] = 4  // error
 ```
 
-## 8. タプル型
+## 9. タプル型
 
 以下の特徴を持つ
 
@@ -107,7 +197,7 @@ console.log(tuple[0])  // hello（アクセスの仕方は配列と同じ）
 const tuple: [string, number] = [10, 'hello']  // error
 ```
 
-## 9. オブジェクトの型注釈
+## 10. オブジェクトの型注釈
 
 ```ts
 const obj: { name: string; age: number }
@@ -123,7 +213,7 @@ obj = { name: "John", age: 20 }
 obj.name = "Tom"  // error
 ```
 
-## 10. オプションプロパティ
+## 11. オプションプロパティ
 
 `?`を付与したプロパティは省略可能になる
 
@@ -132,7 +222,7 @@ let obj: { name: string; age?: number }
 obj = { name: "John" }  // `age`プロパティがなくてもエラーにならない
 ```
 
-## 11. インデックス型
+## 12. インデックス型
 
 インデックス型プロパティの型注釈は`[キー名: プロパティキーの型]: プロパティ値の型`の形で記述
 
@@ -143,7 +233,7 @@ console.log(obj["key1"])
 console.log(obj["key2"])
 ```
 
-## 12. オプショナルチェーン
+## 13. オプショナルチェーン
 
 プロパティが存在するかどうか不確定である場合、`?.`演算子で安全にアクセス可能
 
@@ -155,7 +245,7 @@ printLength({ str: "hello" })  // 5
 printLength({})  // undefined
 ```
 
-## 13. Mapオブジェクト
+## 14. Mapオブジェクト
 
 - Mapオブジェクトはキーとそれに対応する値を対にしたコレクション
 - キーはオブジェクトも含め任意の値が可能
@@ -185,7 +275,7 @@ for (const [key, value] of map) {
 }
 ```
 
-## 14. Setオブジェクト
+## 15. Setオブジェクト
 
 - Setオブジェクトは同じ値が存在しないコレクション
 - Setの要素は何でも可能
@@ -216,7 +306,7 @@ for (const value of set) {
 }
 ```
 
-## 15. 列挙型（Enum）
+## 16. 列挙型（Enum）
 
 関連する一連の数値または文字列値の集まりを定義
 
@@ -244,7 +334,7 @@ enum Color {
 const myColor: Color = Color.Red
 ```
 
-## 16. インターセクション型
+## 17. インターセクション型
 
 複数の型を1つに結合した新しい型を定義。`型1 & 型2 & ...`の形式で使う。その結果として生じた型は、それぞれの型が持つすべてのプロパティとメソッドを備えている
 
@@ -340,7 +430,7 @@ const item: ExtendedType = {
 }
 ```
 
-## 17. 分割代入
+## 18. 分割代入
 
 ### 配列の分割代入
 
@@ -375,7 +465,7 @@ const printCoord = ({ x, y }: { x: number; y: number }) => {
 printCoord({ x: 10, y: 20 })  // 'Coordinate is (10, 20)'
 ```
 
-## 18. オプション引数
+## 19. オプション引数
 
 関数の引数に`?`を付与し、任意とすることが可能
 
@@ -392,7 +482,7 @@ console.log(greet("John"))  // Jhon
 console.log(greet())  // Hello!
 ```
 
-## 19. 型ガード関数
+## 20. 型ガード関数
 
 型ガードとは、ある値に対して特定の型かどうかチェックし、その結果に応じて処理を分けること
 
@@ -467,7 +557,7 @@ userFromApi.forEach(user => {
 })
 ```
 
-## 20. ジェネリクス
+## 21. ジェネリクス
 
 `T`の部分を**型変数**と呼ぶ。型変数は、言葉の通り、型を代入できる変数
 
@@ -490,71 +580,6 @@ const output2 = identity<number>(100)
 
 ```ts
 function compare<T, U>(a: T, b: U) {}
-```
-
-## 21. as const
-
-`as const`は変数、配列、オブジェクトに使うことができる特別な型アサーション
-
-通常、オブジェクトや配列を定義すると、そのプロパティや要素は変更可能（mutable）と見なされる  
-しかし、`as const`を使うことで、それらが変更不可能（immutable）なものとして扱われ、さらに型がより厳密に推論されるようになる
-
-### as constの注意点
-
-`as const`はリテラル値やリテラルからなるオブジェクト、配列に対して適用可能。しかし、**演算結果や関数の戻り値など、リテラル以外の式には使えない**
-
-```ts
-let num = 25 as const;  // OK（25のリテラル型になる）
-let result = (12 + 3) as const  // error
-let age = getNum() as const  // error
-
-function getNum(): number {
-  return 15
-}
-```
-
-### 具体例1. enumの代わりにas constを利用
-
-`enum`は特定の選択肢のセットを簡単に扱うことができる。以下は方向を表す`enum`
-
-```ts
-enum Direction {
-  Up, Down, Left, Right
-}
-```
-
-上の`enum`は`Direction.Up`のように使うことができるほか、`Direction[0]`としてインデックスで逆引きすることも可能
-
-しかし、この逆引きには落とし穴がある。**存在しないインデックスを指定すると`undefined`が返ることである**
-
-```ts
-console.log(Direction[0])  // "Up"
-console.log(Direction[4])  // undefined
-```
-
-以下は`as const`を使った代替案
-
-```ts
-const Directions = {
-  Up: 0,
-  Down: 1,
-  Left: 2,
-  Right: 3
-} as const
-```
-
-このように書くと、`Directions.Up`のようにして値を参照することはできるが、`Directions[0]`のようにインデックスでアクセスすることはできなくなる。このようにして`undefined`を返すリスクを回避できる
-
-### 具体例2. as constを使ってUnion型を作成
-
-Union型は、変数が取り得る型が複数ある場合に使う型である。ある変数が文字列の「Hello」または「Goodbye」のみを取り得るとき、その変数の型は`'Hello' | 'Goodbye'`と表現できる。しかし、これらの値が多くなると、手動でUnion型を定義するのは大変である
-
-そこでas constを使う。オブジェクトのプロパティや配列の要素にas constを適用することで、TypeScriptによる型推論を利用して、自動的に正確なUnion型を得ることができる
-
-```ts
-const responseStates = ["loading", "success", "error"] as const
-// type ResponseState = "loading" | "success" | "error"
-type ResponseState = (typeof responseStates)[number]
 ```
 
 ## 22. Widening（型の拡大）
