@@ -1,0 +1,4 @@
+# チートシート
+
+- JavasScript
+- TypeScript
