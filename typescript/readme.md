@@ -67,12 +67,46 @@ console.log(s1 === s1)  // true
 console.log(s1 === s2)  // false
 ```
 
+### 関数の返り値として別の関数を返す場合の型
+
+以下のようにして、関数を返す関数（高階関数）の型安全性を確保できる
+
+関数の返り値として別の関数を返す場合、その型は `(引数の型) => (返り値の関数の型)`のように定義する
+
+```ts
+// 数値を受け取り、その数を掛け算する関数を返す関数
+type MultiplyFunction = (x: number) => number         // 数値を受け取って数値を返す関数の型
+type GetMultiplier = (n: number) => MultiplyFunction  // 数値を受け取り、MultiplyFunctionを返す関数の型
+
+const getMultiplier: GetMultiplier = (n) => {
+  return (x) => n * x;  // GetMultiplier型の関数を返す
+}
+
+const double = getMultiplier(2)  // 2を掛ける関数を取得
+const triple = getMultiplier(3)  // 3を掛ける関数を取得
+
+console.log(double(5))  // 10
+console.log(triple(5))  // 15
+```
+
 ## 5. 特殊な型
 
 `any`、`unknown`、`void`、`never`
 
 - `void`：値が存在しない、関数がなにも返さないとき利用
 - `never`：エラーを投げる、無限ループの関数などで利用
+
+```ts
+function throwError(message: string): never {
+  throw new Error(message)
+}
+```
+
+```ts
+function infiniteLoop(): never {
+  while (true) {}
+}
+```
 
 ## 6. 型エイリアス
 
