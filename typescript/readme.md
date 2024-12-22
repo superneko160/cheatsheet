@@ -93,8 +93,50 @@ console.log(triple(5))  // 15
 
 `any`、`unknown`、`void`、`never`
 
-- `void`：値が存在しない、関数がなにも返さないとき利用
-- `never`：エラーを投げる、無限ループの関数などで利用
+- `any`: なんでもいい型
+- `unknwon`: なんでもいい型（オブジェクトの操作はできない）
+- `void`: 値が存在しない、関数がなにも返さないとき利用
+- `never`: エラーを投げる、無限ループの関数などで利用
+
+### any型とunknown型の違い
+
+`any`型と違い`unknown`型はオブジェクトの操作ができない
+
+```ts
+const anyObj: any = {
+  id: 'A001',
+  name: 'aaa'
+}
+
+console.log(anyObj.id)  // 'A001'
+```
+
+```ts
+const unknownObj: unknown = {
+  id: 'A001',
+  name: 'aaa'
+}
+
+console.log(unknownObj.id)  // 'unknownObj' is of type 'unknown'.
+```
+
+`unknown`型のオブジェクトを操作したい場合、型を作成し、型アサーションを利用する
+
+```ts
+type Obj = {
+  id: string
+  name: string
+}
+
+const unknownObj: unknown = {
+  id: 'A001',
+  name: 'aaa'
+}
+
+console.log((unknownObj as Obj).id)  // 'A001'
+```
+
+### never型の例
 
 ```ts
 function throwError(message: string): never {
