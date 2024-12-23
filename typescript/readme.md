@@ -161,6 +161,47 @@ const str: StringOrNumber = 'hello'
 const num: StringOrNumber = 24
 ```
 
+### InterfaceとTypeの違い
+
+TSで型を作成するには`interface`か`type`を利用する
+
+```ts
+interface User {
+  name: string
+  age: number
+}
+```
+
+```ts
+type User = {
+  name: string
+  age: number
+}
+```
+
+#### 違い1. `type`ではオブジェクトとクラスの型以外も定義が可能
+
+`interface`ではオブジェクトとクラスの型のみ定義可能。`type`では他の型も参照できる
+
+```ts
+type RGB = 'Red' | 'Green' | 'Blue'
+const rgb: RGB = 'Green'
+```
+
+#### 違い2. `interface`は拡張が可能
+
+```ts
+interface User {
+  name: string
+  age: number
+}
+
+// プレミアムユーザはお気に入り機能を利用できるとする
+interface PremiumUser extends User {
+  favorite_posts: string[]
+}
+```
+
 ## 7. 型アサーション
 
 特定の変数や式の型を明示的に指定する方法。コンパイラに対して「この変数は特定の型であると信頼してください」というメッセージを送るようなイメージ
