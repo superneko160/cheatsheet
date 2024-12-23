@@ -25,7 +25,8 @@
 - [20. 型ガード関数](#20-型ガード関数)
 - [21. ジェネリクス](#21-ジェネリクス)
 - [22. Widening（型の拡大）](#22-widening型の拡大)
-- [23. 参考](#23-参考)
+- [23. in演算子](#23-in演算子)
+- [24. 参考](#24-参考)
 
 ## 0. 想定読者
 
@@ -731,6 +732,31 @@ const userInfo = {
 } as const
 ```
 
-## 23. 参考
+## 23. in演算子
+
+オブジェクトが特定のプロパティを持つか判定するのに利用できる
+
+```ts
+type Employee = {
+  name: string
+  email: string
+}
+
+type Manager = Employee & {
+  teamId: string
+}
+
+const employee: Manager = {
+  name: 'Jhon',
+  email: 'test@example.com',
+  teamId: 'TX200',
+}
+
+if ('teamId' in employee) {
+  console.log('オブジェクトemployeeはteamIdを持っているのでこの人はManagerです')
+}
+```
+
+## 24. 参考
 
 - [TypeScript入門『サバイバルTypeScript』](https://typescriptbook.jp/)
