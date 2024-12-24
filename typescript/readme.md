@@ -26,7 +26,8 @@
 - [21. ジェネリクス](#21-ジェネリクス)
 - [22. Widening（型の拡大）](#22-widening型の拡大)
 - [23. in演算子](#23-in演算子)
-- [24. 参考](#24-参考)
+- [24. ユーティリティ型](#24-ユーティリティ型)
+- [25. 参考](#25-参考)
 
 ## 0. 想定読者
 
@@ -798,6 +799,30 @@ if ('teamId' in employee) {
 }
 ```
 
-## 24. 参考
+## 24. ユーティリティ型
+
+TS側で用意されている**型から別の型を導き出してくれる型**。`function`が実行時の世界の関数だとしたら、ユーティリティ型は型の世界の関数といったイメージ
+
+`Partial`、`Pick`、`Omit`、`ReturnType`、`Record`、`NonNullable`などがある
+
+### Record型
+
+```ts
+Record<Keys, Type>
+```
+
+プロパティのキーが`Keys`型で、プロパティの型が`Type`であるオブジェクト型を構築する。特定の型のキーに対して特定の型の値をマッピングする場合に便利
+
+```ts
+type UserId = string
+type User = { name: string }
+
+const users: Record<UserId, User> = {
+  'A001': { name: 'Alice' },
+  'A002': { name: 'Bob' },
+}
+```
+
+## 25. 参考
 
 - [TypeScript入門『サバイバルTypeScript』](https://typescriptbook.jp/)
