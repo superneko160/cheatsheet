@@ -240,7 +240,7 @@ const canvas = document.getElementById('canvas') as HTMLCanvasElement
 `as const`はリテラル値やリテラルからなるオブジェクト、配列に対して適用可能。しかし、**演算結果や関数の戻り値など、リテラル以外の式には使えない**
 
 ```ts
-let num = 25 as const;  // OK（25のリテラル型になる）
+let num = 25 as const  // OK（25のリテラル型になる）
 let result = (12 + 3) as const  // error
 let age = getNum() as const  // error
 
@@ -327,7 +327,7 @@ const tuple: [string, number] = [10, 'hello']  // error
 ## 10. オブジェクトの型注釈
 
 ```ts
-const obj: { name: string; age: number }
+const user: { name: string; age: number } = {name: 'Jhon Doe', age: 31}
 ```
 
 ### 読み取り専用のオブジェクト
@@ -335,9 +335,9 @@ const obj: { name: string; age: number }
 配列と同じく`readonly`を利用
 
 ```ts
-let obj: { readonly name: string; age: number }
-obj = { name: "John", age: 20 }
-obj.name = "Tom"  // error
+let user: { readonly name: string; age: number }
+user = { name: "John", age: 20 }
+user.name = "Tom"  // error
 ```
 
 ## 11. オプションプロパティ
@@ -345,8 +345,8 @@ obj.name = "Tom"  // error
 `?`を付与したプロパティは省略可能になる
 
 ```ts
-let obj: { name: string; age?: number }
-obj = { name: "John" }  // `age`プロパティがなくてもエラーにならない
+let user: { name: string; age?: number }
+user = { name: "John" }  // `age`プロパティがなくてもエラーにならない
 ```
 
 ## 12. インデックス型
@@ -587,7 +587,7 @@ console.log(age)  // 20
 ```ts
 const printCoord = ({ x, y }: { x: number; y: number }) => {
   console.log(`Coordinate is (${x}, ${y})`)
-};
+}
  
 printCoord({ x: 10, y: 20 })  // 'Coordinate is (10, 20)'
 ```
@@ -626,7 +626,7 @@ function isString(value: any): value is string {
 function printLength(value: any) {
     if (isString(value)) {
         // この節ではvalueはstring型として扱われる
-        console.log(value.length);
+        console.log(value.length)
     }
 }
 
@@ -811,7 +811,7 @@ TS側で用意されている**型から別の型を導き出してくれる型*
 Pick<T, Keys>
 ```
 
-型`T`から`Keys`に**指定したキーだけを含むオブジェクトの型**を返す
+型`T`から`Keys`に**指定したキーだけを含むオブジェクト型**を返す。以下のように、必要なプロパティだけのオブジェクト型を簡単に作成できる
 
 ```ts
 type User = {
@@ -837,7 +837,7 @@ const username: UserName = {
 Omit<T, Keys>
 ```
 
-オブジェクトの型`T`から`Keys`で**指定したプロパティを除いたオブジェクトの型**を返す
+オブジェクトの型`T`から`Keys`で**指定したプロパティを除いたオブジェクト型**を返す。以下のように、特定のプロパティを削除したオブジェクト型を簡単に作成できる
 
 ```ts
 type User = {
