@@ -805,13 +805,65 @@ TS側で用意されている**型から別の型を導き出してくれる型*
 
 `Partial`、`Pick`、`Omit`、`ReturnType`、`Record`、`NonNullable`などがある
 
+### Pick型
+
+```ts
+Pick<T, Keys>
+```
+
+型`T`から`Keys`に**指定したキーだけを含むオブジェクトの型**を返す
+
+```ts
+type User = {
+  firstName: string
+  lastName: string
+  age?: number
+  address?: string
+  createdAt: string
+  updatedAt: string
+}
+
+type UserName = Pick<User, 'firstName' | 'lastName'>
+
+const username: UserName = {
+  'firstName': 'Jane',
+  'lastName': 'Doe',
+}
+```
+
+### Omit型
+
+```ts
+Omit<T, Keys>
+```
+
+オブジェクトの型`T`から`Keys`で**指定したプロパティを除いたオブジェクトの型**を返す
+
+```ts
+type User = {
+  firstName: string
+  lastName: string
+  age?: number
+  address?: string
+  createdAt: string
+  updatedAt: string
+}
+
+type UserName = Omit<User, 'age' | 'address' | 'createdAt' | 'updatedAt'>
+
+const username: UserName = {
+  'firstName': 'Jane',
+  'lastName': 'Doe',
+}
+```
+
 ### Record型
 
 ```ts
-Record<Keys, Type>
+Record<Keys, T>
 ```
 
-プロパティのキーが`Keys`型で、プロパティの型が`Type`であるオブジェクト型を構築する。特定の型のキーに対して特定の型の値をマッピングする場合に便利
+プロパティのキーが`Keys`型で、プロパティの型が`T`であるオブジェクト型を返す。特定の型のキーに対して特定の型の値をマッピングする場合に便利
 
 ```ts
 type UserId = string
