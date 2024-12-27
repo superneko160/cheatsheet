@@ -633,18 +633,19 @@ function printLength(value: any) {
 printLength('hello')  // 5
 ```
 
-### typeof型演算子
-
-`typeof`は変数名から型を逆算する
-
-```ts
-const obj = {
-    name: 'TypeScript',
-    version: 3.9
-}
-
-type ObjectType = typeof object
-```
+> [!NOTE]
+> ### typeof型演算子
+>
+> `typeof`は変数名から型を逆算する
+>
+> ```ts
+> const obj = {
+>     name: 'TypeScript',
+>     version: 3.9
+> }
+> 
+> type ObjectType = typeof object
+> ```
 
 ### 型ガード例
 
