@@ -1,34 +1,5 @@
 # TypeScriptチートシート
 
-## Index
-
-- [0. 想定読者](#0-想定読者)
-- [1. TypeScriptとは](#1-typescriptとは)
-- [2. 型注釈](#2-型注釈)
-- [3. 型推論](#3-型推論)
-- [4. 基本の型](#4-基本の型)
-- [5. 特殊な型](#5-特殊な型)
-- [6. 型エイリアス](#6-型エイリアス)
-- [7. 型アサーション](#7-型アサーション)
-- [8. 配列の型注釈](#8-配列の型注釈)
-- [9. タプル型](#9-タプル型)
-- [10. オブジェクトの型注釈](#10-オブジェクトの型注釈)
-- [11. オプションプロパティ](#11-オプションプロパティ)
-- [12. インデックス型](#12-インデックス型)
-- [13. オプショナルチェーン](#13-オプショナルチェーン)
-- [14. Mapオブジェクト](#14-mapオブジェクト)
-- [15. Setオブジェクト](#15-setオブジェクト)
-- [16. 列挙型（Enum）](#16-列挙型enum)
-- [17. インターセクション型](#17-インターセクション型)
-- [18. 分割代入](#18-分割代入)
-- [19. オプション引数](#19-オプション引数)
-- [20. 型ガード関数](#20-型ガード関数)
-- [21. ジェネリクス](#21-ジェネリクス)
-- [22. Widening（型の拡大）](#22-widening型の拡大)
-- [23. in演算子](#23-in演算子)
-- [24. ユーティリティ型](#24-ユーティリティ型)
-- [25. 参考](#25-参考)
-
 ## 0. 想定読者
 
 - 基本的なWebの仕様を理解している
@@ -876,6 +847,41 @@ const users: Record<UserId, User> = {
 }
 ```
 
-## 25. 参考
+## 25. Conditional Types
+
+Conditional Typesは条件付き型、型の条件分岐、条件型などと呼ばれる。三項演算子のように`?`と`:`を使って`T extends U ? X : Y`のように書く。これは`T`が`U`に割り当て可能である場合、`X`になり、そうでない場合は`Y`になる
+
+```ts
+type IsString<T> = T extends string ? true : false
+const a: IsString<"a"> = true
+```
+
+### 具体例
+
+```ts
+type MessageType = 'success' | 'error' | 'info'
+
+// メッセージの内容に応じて色を変える
+type MessageColor<T> = T extends 'success' 
+  ? 'green'
+  : T extends 'error'
+  ? 'red'
+  : 'blue'
+
+const getMessageStyle = (type: MessageType) => {
+  const color: MessageColor<typeof type> = 
+    type === 'success' ? 'green' :
+    type === 'error' ? 'red' : 
+    'blue'
+
+  return { color }
+}
+
+console.log(getMessageStyle('success'))  // { color: 'green' }
+console.log(getMessageStyle('error'))    // { color: 'red' }
+console.log(getMessageStyle('info'))     // { color: 'blue' }
+```
+
+## 26. 参考
 
 - [TypeScript入門『サバイバルTypeScript』](https://typescriptbook.jp/)
