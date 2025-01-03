@@ -10,7 +10,6 @@
 - [5. Windowオブジェクト](#5-Windowオブジェクト)
 - [6. Documentオブジェクト](#6-Documentオブジェクト)
 - [7. Locationオブジェクト](#7-Locationオブジェクト)
-- [8. Formオブジェクト](#8-Formオブジェクト)
 
 ## 0. JSのオブジェクト
 
@@ -100,20 +99,20 @@ Math.floor(2.45)
 
 ### [random()](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
 
-`0`以上`1`未満の範囲で浮動小数点の乱数を返すメソッド。乱数というのは、ランダムな数という意味。
+`0`以上`1`未満の範囲で浮動小数点の乱数を返すメソッド。乱数というのは、ランダムな数という意味です。
 
 ```js
 console.log(Math.random());  // 0.6144782009746015 など
 ```
 
-`0`以上`1`未満という特定の範囲で使うケースは少ない。そこで、`* n`する。そうすると、`0`以上`n`未満の数値が得られるようになる。
+`0`以上`1`未満という特定の範囲で使うケースは少ない。そこで、`* n`する。そうすると、`0`以上`n`未満の数値が得られるようになります。
 
 ```js
 // 0以上10未満の乱数を取得
 console.log(Math.random() * 10);  // 3.0545764999145786 など
 ```
 
-端数が不要であれば、後述する`Math.ceil()`、`Math.floor()`、`Math.trunc()`、`Math.round()`を利用する。
+端数が不要であれば、後述する`Math.ceil()`、`Math.floor()`、`Math.trunc()`、`Math.round()`を利用します。
 
 ```js
 // 0以上10未満の乱数を、小数点を切り捨てて取得
@@ -144,7 +143,7 @@ console.log(Math.floor(-5.9));  // -6
 
 ### [trunc()](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Math/trunc)
 
-小数点以下を切り落として整数を返すメソッド。負の数の場合は`Math.ceil()`、正の数の場合は`Math.floor()`と同じ結果になる。
+小数点以下を切り落として整数を返すメソッド。負の数の場合は`Math.ceil()`、正の数の場合は`Math.floor()`と同じ結果になります。
 
 ```js
 console.log(Math.trunc(5.1));   // 5
@@ -212,7 +211,7 @@ console.log(date.getDate());  // 31
 
 ### [getDay()](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Date/getDay)
 
-曜日を0から6の数値で取得します（0が日曜日、6が土曜日）。このような仕様になっているのは、各国で曜日の言葉が異なるためです。あえて数値で取得する仕様にしておき柔軟性を持たせています。  
+曜日を0から6の数値で取得します（0が日曜日、6が土曜日）。このような仕様になっているのは、各国で曜日の言葉が異なるためです。あえて数値で取得する仕様にしてくことで、柔軟性を持たせているのです。  
 では、数値からどのようにして実際の曜日を表示するのかというと、以下の書くケースが多いです。
 
 ```js
@@ -355,7 +354,7 @@ console.log(lastFruit);  // 'orange'
 console.log(fruits);     // ['apple', 'banana']
 ```
 
-### [.unshift()](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/unshift)
+### [unshift()](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/unshift)
 
 配列の先頭に要素を追加するメソッド。
 
@@ -378,7 +377,7 @@ console.log(fruits);      // ['banana', 'orange']
 
 ### [forEach()](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
 
-配列の各要素に対して関数を実行するメソッド。forEach()メソッドの引数には文字列や数値、配列といった値ではなく関数を指定する。
+配列の各要素に対して関数を実行するメソッド。forEach()メソッドの引数には文字列や数値、配列といった値ではなく関数を指定します。
 
 ```js
 const fruits = ['apple', 'banana', 'orange'];
@@ -395,8 +394,9 @@ fruits.forEach(function(fruit, index) {
 > [!NOTE]
 > 名前をつけた関数を自作して引数に設定してもよいが、ここでの関数は`foreEach()`の処理でのみ使うことが多く、ほかの箇所で利用するケースが少ないので、名前を付与した関数を利用する意味が薄い。
 > そこで、名前を持たない関数を直接引数に設定する。このように名前のない関数を**無名関数**と呼ぶ。
+> また、このように関数内やメソッドの引数に設定する関数を**コールバック関数**と呼ぶ。
 
-なお、無名関数の第2引数`index`は使う予定がなければ書かなくてもいい。
+なお、無名関数の第2引数`index`は使う予定がなければ書かなくてもかまいません。
 
 ```js
 const fruits = ['apple', 'banana', 'orange'];
@@ -424,7 +424,7 @@ fruits.forEach((fruit, index) => {
 // 2: orange
 ```
 
-のように**アロー関数**を利用するケースもよく見られる。
+のように**アロー関数**を利用するケースもよく見られます。
 
 ### [join()](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/join)
 
@@ -442,8 +442,197 @@ console.log(elements.join(' and '));  // Fire and Air and Water  引数に and �
 
 ## 5. Windowオブジェクト
 
+JSはブラウザ側で動く唯一無二の特徴を持ったプログラミング言語です。そのため、ブラウザを操作するためのオブジェクトを持っています。それらを総称してブラウザオブジェクトと呼ぶのですが、その最上位の階層に存在するのが`Window`オブジェクトです。
+
+![オブジェクト階層図]](./../docs/object-diagram.drawio.png)
+
+ブラウザオブジェクトのすべては、この最上位に位置する`Window`オブジェクトを通してアクセスします。
+
+たとえば、`document.getElementById()`を使って、特定のHTMLを取得したことがあるかと思います。実は、それは以下のようにも書けます。
+
+```js
+const title = window.document.getElementById('title');
+```
+
+しかし、実際には、このように書くのは非常に面倒なので、`window`の部分は省略して書けるようになっているのです。
+
+```js
+const title = document.getElementById('title');
+```
+
+`window`オブジェクト直下のメソッドも例外ではなく、以下に紹介する`alert()`メソッド等も、`window.alert()`ではなく`alert()`のように`window`を省略して記述できます。
+
+### [alert()](https://developer.mozilla.org/ja/docs/Web/API/Window/alert)
+
+指定された警告メッセージとして表示します。
+
+```js
+window.alert('氏名が入力されていません');
+```
+
+### [confirm()](https://developer.mozilla.org/ja/docs/Web/API/Window/confirm)
+
+確認ダイアログを表示します。`alert()`が警告メッセージを表示するのみなのに対し、`confirm()`はユーザになにからしらの意思表示を求めることができます。確認ダイアログでは、OKボタンを押すと`true`、キャンセルボタンが押されると`false`を返します。
+
+```js
+const check = window.confirm('メッセージを送信してもよろしいですか？');
+console.log(check);  // OKボタン押下時true、キャンセルボタン押下時false
+```
+
+### [prompt()](https://developer.mozilla.org/ja/docs/Web/API/Window/prompt)
+
+入力ダイアログを表示します。入力された文字をメソッドの返り値として受け取ることができます。
+
+```js
+const input = window.prompt('名前を入力してください');
+
+console.log('あなたの名前は:' + input + 'です');
+```
+
+### [setTimeout()](https://developer.mozilla.org/ja/docs/Web/API/Window/setTimeout)
+
+一定時間が経過したあとに、コールバック関数内に記述された処理を実行します。
+
+第1引数にコールバック関数、第2引数に時間を指定します。
+
+```js
+window.setTimeout(コールバック関数, 時間);
+```
+
+```js
+// 5秒後にHelloという文字の入った警告アラートを表示
+window.setTimeout(function() {
+    alert('Hello!!');
+}, 5000);
+```
+
+### [setInterval()](https://developer.mozilla.org/ja/docs/Web/API/Window/setInterval)
+
+一定時間ごとに、コールバック関数内に記述された処理を実行します。
+
+第1引数にコールバック関数、第2引数に時間を指定します。
+
+```js
+window.setInterval(コールバック関数, 時間);
+```
+
+```js
+// 5秒ごとにHelloという文字をコンソールに表示
+window.setInterval(function() {
+    console.log('Hello');
+}, 5000);
+```
+
 ## 6. Documentオブジェクト
+
+### [getElementById()](https://developer.mozilla.org/ja/docs/Web/API/Document/getElementById)
+
+引数に指定された`id`を持つHTML要素を取得します。
+
+```js
+<html>
+<head>
+</head>
+<body>
+  <ul>
+    <li class="languages" id="js">JavaScript</li>
+    <li class="languages">PHP</li>
+    <li class="languages">Python</li>
+  </ul>
+  <script>
+    const element = document.getElementById('js');
+    console.log(element);  // <li class="languages" id="js">JavaScript</li>
+  </script>
+</body>
+</html>
+```
+
+### [getElementsByClassName()](https://developer.mozilla.org/ja/docs/Web/API/Document/getElementsByClassName)
+
+引数に指定された`class`を持つすべての子要素の配列ライクなオブジェクト（`HTMLCollection`）を取得します。
+
+```js
+<html>
+<head>
+</head>
+<body>
+  <ul>
+    <li class="languages" id="js">JavaScript</li>
+    <li class="languages">PHP</li>
+    <li class="languages">Python</li>
+  </ul>
+  <script>
+    const elements = document.getElementsByClassName('languages');
+
+    for (const element of elements) {
+        console.log(element);
+    }
+  </script>
+</body>
+</html>
+```
+
+### [querySelector()](https://developer.mozilla.org/ja/docs/Web/API/Document/querySelector)
+
+引数に指定されたセレクタに一致するHTML要素を取得します。  
+`getElementById()`や`getElementsByClassName()`と異なり、セレクタで指定するので`id`であれば`#`、`class`であれば`.`を書くのを忘れないようにしましょう。
+
+```js
+<html>
+<head>
+</head>
+<body>
+  <ul>
+    <li class="language" id="js">JavaScript</li>
+    <li class="language">PHP</li>
+    <li class="language">Python</li>
+  </ul>
+  <script>
+    const element = document.querySelector('ul #js');
+    console.log(element);  // <li class="language" id="js">JavaScript</li>
+  </script>
+</body>
+</html>
+```
+
+### [querySelectorAll()](https://developer.mozilla.org/ja/docs/Web/API/Document/querySelectorAll)
+
+引数に指定されたセレクタに一致するHTML要素のリスト（`NodeList`）を取得します。
+
+```js
+<html>
+<head>
+</head>
+<body>
+  <ul>
+    <li class="language" id="js">JavaScript</li>
+    <li class="language">PHP</li>
+    <li class="language">Python</li>
+  </ul>
+  <script>
+    const elements = document.querySelectorAll('ul .language');
+
+    elements.forEach(function(element) {
+        console.log(element);
+    });
+  </script>
+</body>
+</html>
+```
 
 ## 7. Locationオブジェクト
 
-## 8. Formオブジェクト
+Webページのアドレス情報を取得、操作するオブジェクトです。
+
+### [href](https://developer.mozilla.org/ja/docs/Web/API/Location/href)
+
+`location`オブジェクトを利用する最も典型的な用途は、JSからページ移動を制御することです。
+
+```js
+const check = window.confirm('メッセージを送信してもよろしいですか？');
+
+// OKボタン押下時、メッセージ送信完了ページに遷移
+if (check) {
+    location.href = 'https://example.com/complete/'
+}
+```
