@@ -250,7 +250,7 @@ console.log(now.getMinutes());  // 52 など
 `String`オブジェクトは文字列を操作するための機能を提供するオブジェクトです。  
 ここでいう`String`というのは、つまり、文字列です。今まで扱ってきた文字列も実はオブジェクトなのです。
 
-### [lenght](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String/length)
+### [length](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String/length)
 
 `length`プロパティは、文字列の長さ（文字数）を取得します。
 
