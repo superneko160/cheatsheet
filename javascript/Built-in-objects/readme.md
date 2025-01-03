@@ -444,7 +444,7 @@ console.log(elements.join(' and '));  // Fire and Air and Water  引数に and �
 
 JSはブラウザ側で動く唯一無二の特徴を持ったプログラミング言語です。そのため、ブラウザを操作するためのオブジェクトを持っています。それらを総称してブラウザオブジェクトと呼ぶのですが、その最上位の階層に存在するのが`Window`オブジェクトです。
 
-![オブジェクト階層図]](./../docs/object-diagram.drawio.png)
+![オブジェクト階層図](./../docs/object-diagram.drawio.png)
 
 ブラウザオブジェクトのすべては、この最上位に位置する`Window`オブジェクトを通してアクセスします。
 
