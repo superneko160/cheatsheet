@@ -620,6 +620,22 @@ window.setInterval(function() {
 </html>
 ```
 
+> [!NOTE]
+> 
+> ところで、`getElementsByClassName()`と`querySelectorAll()`で取得したHTML要素をループさせる際、`getElementsByClassName()`のコード例では`for...of`を利用し、`querySelectorAll()`のコード例では`forEach()`を利用している点に気づいたでしょうか。これには理由があります。
+> 
+> 取得したHTML要素を`console.log()`で確認するとわかるのですが、`getElementsByClassName()`で取得したほうは`HTMLCollection`というオブジェクトで、`querySelectorAll()`で取得したほうは`NodeList`というオブジェクトになっています。両方とも単純な配列やオブジェクトではないのです。
+> 
+> ![HTMLCollection](./../docs/htmlcollection_forof.png)
+> ![NodeList](./../docs/nodelist_foreach.png)
+> 
+> コンソールに表示された`[[Prototype]]:`を展開すると、そのオブジェクトが使えるメソッド一覧を見ることができます。
+> `HTMLCollection`のほうには`foreEach()`メソッドの記載はなく、`NodeList`のほうには`foreEach`メソッドの記載があるのが確認できます。
+> 
+>このように、オブジェクトは使えるプロパティ、メソッドがあらかじめ決まっています。`Math`オブジェクトが`Math.alert()`のように`alert()`メソッドが使えないことを考えてもらえればすんなり頭に入ってきやすいはずです。
+>
+> `getElementsByClassName()`のサンプルコードで`for...of`を使っていた理由は、シンプルに`forEach()`メソッドが使えなかったからです。利用しようとすると、`Uncaught TypeError: Cannot read properties of undefined (reading 'forEach')`というエラーが出ます。エラー文を直訳すると **「forEachは未定義のプロパティだから読み込めません」** と言っています。未定義というのは、存在しないということです。つまり、そのままの意味でエラーが出るのが確認できます。
+
 ## 7. Locationオブジェクト
 
 Webページのアドレス情報を取得、操作するオブジェクトです。
