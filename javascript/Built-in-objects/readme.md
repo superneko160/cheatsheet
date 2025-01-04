@@ -267,14 +267,26 @@ console.log('Hello'.length);  // 5
 
 ### [slice()](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String/slice)
 
-文字列の一部を切り出すメソッド。開始位置と終了位置を指定します。
+文字列の一部を切り出すメソッド。引数に開始位置と終了位置を指定します。
+
+開始位置と終了位置の指定の仕方は、**文字列を配列のイメージとしてとらえるとよい**です。以下の画像のように、配列の1つの要素に1つの文字が入っているイメージです。
+
+どこの位置から（開始位置）どこの位置まで（終了位置）を指定する方法は、**配列のインデックスを指定する方法と同じ**だと考えれば理解しやすいでしょう。そして、このイメージは、下記の`indexOf`やほかのメソッドでも有効な考え方です。
+
+![文字列を配列のイメージとしてとらえる](./../docs/string_image.png)
 
 ```js
 const str = 'Hello World';
-console.log(str.slice(0, 5));    // Hello
-console.log(str.slice(6));       // World
-console.log(str.slice(-5));      // World  負の値は末尾から
+
+// 0番目のインデックスの文字から5番目のインデックスの文字を切り出す
+console.log(str.slice(0, 5));  // Hello
+
+// 2番目のインデックスの文字から8番目のインデックスの文字を切り出す
+console.log(str.slice(2, 8));  // llo Wo
 ```
+
+> [!NOTE]
+> サンプルコードでも確認できるとおり、空白文字も1文字としてカウントします。
 
 ### [indexOf()](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String/indexOf)
 
