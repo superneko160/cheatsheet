@@ -456,7 +456,7 @@ console.log(elements.join(' and '));  // Fire and Air and Water  引数に and �
 
 JSはブラウザ側で動く唯一無二の特徴を持ったプログラミング言語です。そのため、ブラウザを操作するためのオブジェクトを持っています。それらを総称してブラウザオブジェクトと呼ぶのですが、その最上位の階層に存在するのが`Window`オブジェクトです。
 
-![オブジェクト階層図](./../docs/object-diagram.drawio.svg)
+![オブジェクト階層図](./../docs/object-hierarchy.png)
 
 ブラウザオブジェクトのすべては、この最上位に位置する`Window`オブジェクトを通してアクセスします。
 
@@ -654,7 +654,7 @@ Webページのアドレス情報を取得、操作するオブジェクトで�
 
 ### [href](https://developer.mozilla.org/ja/docs/Web/API/Location/href)
 
-`location`オブジェクトを利用する最も典型的な用途は、JSからページ移動を制御することです。
+`location`オブジェクトを利用する最も典型的な用途は、JSからページ移動を制御することです。`href`プロパティにURLを代入すると、そのリンク先に遷移します。
 
 ```js
 const check = window.confirm('メッセージを送信してもよろしいですか？');
