@@ -1,4 +1,5 @@
 # チートシート
 
+- CLI
 - JavasScript
 - TypeScript
