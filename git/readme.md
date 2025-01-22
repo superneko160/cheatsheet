@@ -77,3 +77,29 @@ git commit -m 'メッセージ'
 ![gitlogコマンド](docs/git-log.png)
 
 履歴画面は`q`を入力すると、終了できます。
+
+## 6. `git clone`コマンド
+
+**GitHubに存在しているリポジトリ（リモートリポジトリ）をローカルに作成（コピー）するコマンド** です。
+
+```sh
+git clone リモートリポジトリのURL
+```
+
+たとえば、この`cheatsheet`リポジトリをあなたのローカル環境にクローン（コピー）したい場合、以下のようにします。
+
+**step1.** 「Copy」というボタンを押すと、リモートリポジトリのURLが表示されるのでコピーします。
+
+![git-cloneコマンド](docs/git-clone.png)
+
+**step2.** クローンしたいディレクトリ下まで移動し、以下のコマンドを入力します。`git clone`コマンドのあとに、先ほどコピーしたURLをペーストします。
+
+```sh
+git clone https://github.com/superneko160/cheatsheet.git
+```
+
+しばらく待つと、コマンドを入力したディレクトリに、リポジトリがクローンされているはずです。
+
+## 参考
+
+- [Git - Reference](https://git-scm.com/docs)
