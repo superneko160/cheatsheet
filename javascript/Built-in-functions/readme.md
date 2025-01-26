@@ -27,7 +27,7 @@
 プログラミング言語も、自分たちですべてを1から作成するのは大変なので、ある程度、基本的な機能を持った関数を用意してくれています。  
 最初から組み込まれている関数なので組み込み関数です。
 
-## 1. [parseInt()](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/parseInt)
+## 1. [parseInt()関数](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/parseInt)
 
 引数に設定された文字列(`string`型)を数値(`number`型)に変換する関数です。
 
