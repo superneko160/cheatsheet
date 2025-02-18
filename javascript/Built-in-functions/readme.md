@@ -4,7 +4,7 @@
 
 - [0. プログラミングの関数](#0-プログラミングの関数)
 - [1. parseInt()関数](#1-parseInt()関数)
-
+- [2. isNaN()関数](#2-isNaN()関数)
 
 ## 0. プログラミングの関数
 
@@ -46,3 +46,16 @@ console.log(typeof(result));  // number
 > ```js
 > console.log(typeof "10");  // string
 > ```
+
+## 2. [isNaN()関数](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/isNaN)
+
+引数に設定された値が`NaN（数値ではないことを示す値）`か判定する関数です。  
+引数に設定された値が`NaN`（`hello`という文字列など）ならば`true`、`24`などの数値ならば`false`を返します。
+
+```js
+const input = window.prompt('数値を入力してください');
+
+if (isNaN(input)) {
+    window.alert('入力された値は数値ではありません');
+}
+```
