@@ -21,6 +21,7 @@
 
 - 変数にどのような値が代入できるのかを制約するものを「型」と呼ぶ
 - 開発者は、変数がどのような型なのかを型注釈で指定する
+- 型注釈は型アノテーションとも呼ばれる
 
 ## 3. 型推論
 
@@ -885,6 +886,87 @@ console.log(getMessageStyle('error'))    // { color: 'red' }
 console.log(getMessageStyle('info'))     // { color: 'blue' }
 ```
 
-## 26. 参考
+## 26. satisfies演算子
+
+オブジェクトや配列などの変数が型を「満たしている」とコンパイラに示すための仕組み
+
+`satisfies`の必要性を論じるために、まずは`as const`と`型注釈（型アノテーション）`を組み合わせたときに発生する現象を確認する
+
+下の例は`as const`を利用して、ユーザ情報を書き換えられないようにしたいと考えて作成したプログラムである
+
+```ts
+type User = {
+  id: string
+  name: string
+}
+
+// 型注釈なし、as constあり
+const user1 = { id: "001", name: "Alice" } as const
+
+// 型注釈あり、as constあり
+const user2: User = { id: "002", name: "Bob" } as const
+
+user1.name = "Eve"  // error
+user2.name = "Jhon" // 上書きできてしまう
+```
+
+`as const`を付与した場合、オブジェクトはリテラル型かつ`readonly`なオブジェクトとなり、`user1.name`のようなプロパティの書き換えはエラーとなる。これが普通
+
+しかし、`user2`のように型注釈`: User`と`as const`を併用すると、意図に反して、プロパティを書き換えられる状況が生まれる。 **`as const`で得た`readonly`の特性が、型注釈によって打ち消されてしまう現象が起こる**
+
+もうひとつ例を見る  
+下の例では`User`型に`email`プロパティを追加した
+
+```ts
+type User = {
+  id: string
+  name: string
+  email: string
+}
+
+// 型注釈なし、as constあり
+const user1 = { id: "001", name: "Alice" } as const
+
+// 型注釈あり、as constあり
+// 宣言時点でエラー
+const user2: User = { id: "002", name: "Bob" } as const
+
+user1.name = "Eve"
+user2.name = "Jhon"
+```
+`user2`は変数宣言の時点でエラーが出る。話は単純で、型が記述されているからで、「`email`が足りていない！」とエラーが出ているだけである
+
+一方、`user1`は、`User`型と一致していなくてもエラーになっていない。これは「`User`型に違反しているのか、たまたま今までが`User`型と一致していただけなのか」を推論しようがないからである
+
+このように`as const`のみでは型の決定を制御できないケースが出てくる。今回のように`as const`のみの利用だと、`email`のようなプロパティの追加漏れに気づけないリスクがある
+
+`satisfies`を使うと、オブジェクトが指定した型を満たしているかコンパイラが検証するが、変数自体をその型に固定せず、推論結果を優先するようになる
+
+```ts
+const user1 = { id: "001", name: "Alice" } satisfies User
+const user2 = { id: "002", name: "Bob" } as const satisfies User
+```
+
+また`as const`を併用することで、型を満たしたうえでリテラル型情報や`readonly`特性を保てる。`as const satisfies User`と書けば、`User`型を満たしているかチェックしつつ、`as const`によるリテラル型や`readonly`特性を損なわずに保持可能である
+
+先ほどの`User`型に`email`プロパティを追加したとき、開発者が気づけるかの点についても確認しておく
+
+```ts
+type User = {
+  id: string
+  name: string
+  email: string
+}
+
+// does not satisfy the expected type 'User'.
+const user1 = { id: "001", name: "Alice" } satisfies User
+
+// does not satisfy the expected type 'User'.
+const user2 = { id: "002", name: "Bob" } as const satisfies User
+```
+
+このように`as const satisfies T`というパターンは便利。`as T`はコンパイラに`T`型であると信じさせるアサーションであり、使い方によっては欺くことができてしまう。`satisfies T`は、型と一致しているかを厳密に判定するため、不正な値を紛れ込ませるリスクを減らせる
+
+## 27. 参考
 
 - [TypeScript入門『サバイバルTypeScript』](https://typescriptbook.jp/)
