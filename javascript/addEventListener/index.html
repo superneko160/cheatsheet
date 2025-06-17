@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>イベントの追加の仕方</title>
+</head>
+<body>
+
+<div id="box" style="width:200px;height:200px;background:#5dc;"></div>
+
+<select id="pref">
+    <option value="未選択です">選択してください</option>
+    <option value="北海道">北海道</option>
+    <option value="東京">東京都</option>
+    <option value="石川">石川県</option>
+    <option value="大阪">大阪府</option>
+    <option value="福岡">福岡県</option>
+</select>
+<div id="prefResult"></div><!-- 表示エリア -->
+
+<script>
+    'use strict';
+    /**
+     * イベントの「追加」と言うが
+     * 要素に対して機能（関数）を追加しているイメージで使われる
+     * 
+     * JSではイベントの追加の方法は2つ
+     * 両方とも同じだが、微妙に違いがありaddEventListenerのほうが主流
+     * 理由は以下の記事参照
+     * https://qiita.com/KKKarin/items/ccb8ed361ab9acd1f9cf
+     */
+
+    /**
+     * イベント追加方法1
+     * 構文1：要素.イベント名 = function () { したい処理 };
+     * 構文2：要素.イベント名 = 関数名; （※関数名のあとに()つけない！）
+     */
+    document.getElementById('box').onclick = function () {
+        console.log('イベント発生1');
+    };
+
+    /**
+     * イベント追加方法2
+     * 構文1：要素.addEventListener('イベント名', function() { したい処理 });
+     * 構文2：要素.addEventListener('イベント名', 関数名);（※関数名のあとに()つけない！）
+     */
+    document.getElementById('box').addEventListener('click', function() {
+        console.log('イベント発生2');
+    });
+
+    /**
+     * 構文2の具体例
+     */
+    // function test() {
+    //     console.log('名前をつけた関数を引数に渡す場合は()つけない！');
+    // }
+    // document.getElementById('box').addEventListener('click', test);
+
+
+    /**
+     * 他イベント例
+     * セレクトボックスの値が変更されたときの処理
+     */
+    document.getElementById('pref').addEventListener('change', function() {
+
+        // セレクトボックス内のoption要素をすべて取得して配列に
+        // querySelectorAll(取得したい要素) querySelector()は取得できる要素は1つだけだが、
+        // querySelectorAll()は同じ要素や同じクラス名の要素をすべて取得し配列に入れる
+        const options = document.querySelectorAll("#pref option");
+
+        // console.log(this);  // イベントのターゲット要素そのものを指す（ここではセレクトボックスそのもの）
+        // console.log(this.selectedIndex);  // 現在選択されている選択肢のインデックス番号
+
+        // 表示エリアに現在選択されている選択肢のvalueに入っている値を表示
+        document.getElementById('prefResult').textContent = options[this.selectedIndex].value;
+    });
+
+
+    /**
+     * 他イベント例
+     * キー押下時の処理
+     */
+    // window.addEventListener('keydown', function(event) {
+    //     // なんのキーを押したか
+    //     console.log(event.key);
+    // });
+</script>
+</body>
+</html>
