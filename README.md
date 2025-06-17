@@ -3,8 +3,8 @@
 - [CLI](https://github.com/superneko160/cheatsheet/tree/main/CLI)
 - [git](https://github.com/superneko160/cheatsheet/blob/main/git/readme.md)
 - [JavaScript](https://github.com/superneko160/cheatsheet/tree/main/javascript)
+- [PHP](https://github.com/superneko160/cheatsheet/tree/main/php)
 - [TypeScript](https://github.com/superneko160/cheatsheet/tree/main/typescript)
-
 
 ## 講義用プログラム
 
