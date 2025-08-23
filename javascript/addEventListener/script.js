@@ -19,6 +19,6 @@ window.addEventListener('keydown', function(e) {
     }
 
     // 戦闘機（画像）を座標を変更したぶんだけ動かす
-    planeImage.style.left = x + "px";
-    planeImage.style.top = y + "px";
+    planeImage.style.left = x + 'px';
+    planeImage.style.top = y + 'px';
 });
