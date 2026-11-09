@@ -12,3 +12,4 @@ ECMAScript（JavaScript）の使う頻度の高い、あるいは使えそうな
 - [ES2023](https://github.com/superneko160/cheatsheet/tree/main/javascript/es-history/ES2023)
 - [ES2024](https://github.com/superneko160/cheatsheet/tree/main/javascript/es-history/ES2024)
 - [ES2025](https://github.com/superneko160/cheatsheet/tree/main/javascript/es-history/ES2025)
+- [ES2026](https://github.com/superneko160/cheatsheet/tree/main/javascript/es-history/ES2026)
