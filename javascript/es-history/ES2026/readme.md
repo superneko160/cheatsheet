@@ -1,6 +1,6 @@
 #  ES2026
 
-## [JOSN.parse()](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) の引数のコールバック関数の改良
+## [JSON.parse()](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) の引数のコールバック関数の改良
 
 `JSON.parse()` は数値型文字列を数値にするなど、一部の型を勝手に変換してしまい、正確な値が失われてしまうケースがある
 
