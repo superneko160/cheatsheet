@@ -25,6 +25,8 @@ $data = [
 
 ### [array_find()](https://www.php.net/manual/ja/function.array-find.php)
 
+検索して最初の値を返す
+
 ```php
 var_dump(
     array_find($data, fn (string $value) => strlen($value) > 4)
@@ -32,6 +34,8 @@ var_dump(
 ```
 
 ### [array_find_key()](https://www.php.net/manual/ja/function.array-find-key.php)
+
+検索して最初のキーを返す
 
 ```php
 var_dump(
@@ -41,6 +45,8 @@ var_dump(
 
 ### [array_any()](https://www.php.net/manual/ja/function.array-any.php)
 
+ひとつでも `true` であれば `true`
+
 ```php
 var_dump(
     array_any($data, fn (string $value) => strlen($value) < 3)
@@ -48,6 +54,8 @@ var_dump(
 ```
 
 ### [array_all()](https://www.php.net/manual/ja/function.array-all.php)
+
+全項目が `true` であれば `true`
 
 ```php
 var_dump(
