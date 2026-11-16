@@ -16,8 +16,7 @@ class UrlValidator {
 
 ```php
 $str = '名';
-echo mb_str_pad($str, 3, '■');
-echo  '<br>';
+echo mb_str_pad($str, 3, '■'); // 名■■
 ```
 
 ## [json_validate()](https://www.php.net/manual/ja/function.json-validate.php)
